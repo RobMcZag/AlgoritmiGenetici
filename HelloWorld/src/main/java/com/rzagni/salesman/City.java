@@ -1,5 +1,10 @@
 package com.rzagni.salesman;
 
+/**
+ * A basic city implementation, holding just the city coordinates 
+ * @author Roberto
+ *
+ */
 public class City {
 	private int x, y;
 
