@@ -18,6 +18,28 @@ public class Peg<COLOR> {
 	public COLOR getColor() {
 		return this.color;
 	}
+
+	/** 
+	 * Two pegs are equal if they have the same color.
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Peg<?>) {
+			return this.color.equals(((Peg<?>) obj).getColor());
+		}
+		return false;
+	}
+
+	/**
+	 * Two pegs are equal if they have the same color, 
+	 * so they should have the same hashCode if are of the same color.
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.color.hashCode();
+	}
 	
 	
 }
