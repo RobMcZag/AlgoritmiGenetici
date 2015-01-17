@@ -29,8 +29,6 @@ public class PegCacheTest {
 		assertEquals(cachedP1, p1bis);
 		assertTrue("Cache should return always the same Peg for a certain colour", cachedP1 == p1bis);
 	}
-	// TODO 
-	// TODO 
 
 
 	@Test
