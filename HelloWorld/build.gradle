@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 sourceCompatibility = 1.6
-version = '0.1.0'
+version = '1.0.0'
 
 jar {
     baseName = 'algoritmi-genetici-hello-world'
