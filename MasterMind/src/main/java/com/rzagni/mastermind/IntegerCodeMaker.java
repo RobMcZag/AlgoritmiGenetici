@@ -1,6 +1,10 @@
 package com.rzagni.mastermind;
 
+import java.lang.reflect.Array;
+
 public class IntegerCodeMaker {
+	
+	private static final Peg<Integer> samplePeg = new Peg<Integer>(Integer.valueOf(0)); 
 	
 	private static final int MIN_CODE_LENGTH = 1;
 	private static final int MIN_NUM_COLORS = 2;
@@ -32,15 +36,15 @@ public class IntegerCodeMaker {
 	 * Generates a secret code of the current length and using Pegs of the allowed colors
 	 * @return an array with the generated Pegs;
 	 */
-	@SuppressWarnings("unchecked")
 	private Peg<Integer>[] generateSecretCode() {
-		Peg<Integer>[] secretCode = new Peg[this.codeLength];
-		for (int i = 0; i < secretCode.length; i++) {
+		@SuppressWarnings("unchecked")
+		Peg<Integer>[] code = (Peg<Integer>[]) new Peg<?>[this.codeLength];
+		for (int i = 0; i < code.length; i++) {
 			java.util.Random r = new java.util.Random();
 			Integer color = r.nextInt(this.numberOfColors);
-			secretCode[i] = PegFactory.getInstance().getPeg(color); 
+			code[i] = PegFactory.getInstance().getPeg(color); 
 		}
-		return secretCode;
+		return code;
 	}
 
 	public int getCodeLength() {

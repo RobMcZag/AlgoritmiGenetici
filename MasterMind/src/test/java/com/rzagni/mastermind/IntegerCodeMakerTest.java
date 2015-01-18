@@ -81,32 +81,27 @@ public class IntegerCodeMakerTest {
 		for (int p = 0; p < lc; p++) {
 			int totalePresenze = 0;
 			for (int c = 0; c < nc; c++) {
-//				System.out.print(presenze[p][c] + "|");
 				totalePresenze += presenze[p][c];
 				totaleColore[c] += presenze[p][c];
 				assertTrue("For every color, the number of presences should be around the average",
 						(presenze[p][c] >= pMin) && (presenze[p][c] <= pMax) );
 			}
-//			System.out.println();
 			assertEquals("For every position, the totoal number of presence should be equal to the iterations",
 					iterations, totalePresenze);
 		}
-//		System.out.println("--");
 		
 		for (int c = 0; c < nc; c++) {
-//			System.out.print(totaleColore[c] + "|");
 			assertTrue("For every color, the total number of presences should be around the average",
 					(totaleColore[c] >= (pMin * lc)) && (totaleColore[c] <= (pMax * lc)) );
 		}
-//		System.out.println("\n");
 	}
 
 	/**
-	 * @param lc
-	 * @param nc
-	 * @param presenze
-	 * @param iterations
-	 * @return 
+	 * Creates the required number of CodeMakers and measure the coo of the Pegs found in their codes.
+	 * @param lc the length of the code
+	 * @param nc the number of colors to use
+	 * @param iterations the number of codes to measure
+	 * @return a matrix int[lc][nc] with the number of peg for any color in any position.
 	 */
 	private int[][] measureCodeGeneration(int lc, int nc, int iterations) {
 		int[][] presenze = new int[lc][nc];
