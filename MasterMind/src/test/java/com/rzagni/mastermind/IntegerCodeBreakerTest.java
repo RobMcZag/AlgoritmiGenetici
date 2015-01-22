@@ -10,6 +10,7 @@ public class IntegerCodeBreakerTest {
 	private final int codeLength  = 4;
 	private final int numberOfColors = 6;
 	private IntegerCodeBreaker codeBreaker;
+	private final ResultMarker[] result = { ResultMarker.BLACK, ResultMarker.BLACK, ResultMarker.BLACK, ResultMarker.EMPTY };
 
 	public IntegerCodeBreakerTest() {
 	}
@@ -30,6 +31,13 @@ public class IntegerCodeBreakerTest {
 	@Test
 	public void testGetCurrentGuess() {
 		Peg<Integer>[] guess = codeBreaker.getCurrentGuess();
+		checkThisIsARealPegArray(guess);
+	}
+	/**
+	 * Checks the passed peg array is a real array with real pegs in all positions
+	 * @param guess
+	 */
+	private void checkThisIsARealPegArray(Peg<Integer>[] guess) {
 		assertNotNull("Should return a real pattern.", guess);
 		assertEquals("Pattern lenght should be of the right length.", codeLength, guess.length);
 		for (Peg<Integer> peg : guess) {
@@ -41,8 +49,24 @@ public class IntegerCodeBreakerTest {
 	@Test
 	public void testGetGuessCount() {
 		assertEquals("Should return the count of the current guess.", 1, codeBreaker.getGuessCount());
-		// TODO retrieve next guess and check guessCount advance
+		codeBreaker.getNextGuess(result);
+		assertEquals("Should return the count of the current guess.", 2, codeBreaker.getGuessCount());
+		codeBreaker.getNextGuess(result);
+		assertEquals("Should return the count of the current guess.", 3, codeBreaker.getGuessCount());
 	}
 	
-	// TODO test getNextGuess(). Check length and Peg colors (like in testGetCurrentGuess() - REfactor checks)
+	@Test(expected=IllegalArgumentException.class)
+	public void testGetNextGuess_NullResult() {
+		codeBreaker.getNextGuess(null);
+		fail("Should throw an IllegalArgumentException");
+	}
+	
+	@Test
+	public void testGetNextGuess() {
+		Peg<Integer>[] guess = codeBreaker.getCurrentGuess();
+		Peg<Integer>[] nextGuess = codeBreaker.getNextGuess(result);
+		checkThisIsARealPegArray(nextGuess);
+	}
+	// TODO should we remember and return guesses and results to every guess?
+	
 }
