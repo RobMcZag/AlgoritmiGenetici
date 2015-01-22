@@ -17,14 +17,5 @@ public enum ResultMarker {
 	public String getDescription() {
 		return description;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Enum#toString()
-	 */
-	@Override
-	public String toString() {
-		return this.name() + " (" + this.ordinal() + ") is used to signal " + this.description;
-	}
-	
 	
 }
