@@ -2,9 +2,18 @@ package com.rzagni.mastermind;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 public class IntegerCoderTest {
+
+	private final Peg<Integer> peg0 = PegFactory.getInstance().getPeg(0);
+	private final Peg<Integer> peg1 = PegFactory.getInstance().getPeg(1);
+	private final Peg<Integer> peg2 = PegFactory.getInstance().getPeg(2);
+	private final Peg<Integer> peg3 = PegFactory.getInstance().getPeg(3);
+	private final Peg<Integer> peg4 = PegFactory.getInstance().getPeg(4);
+	private final Peg<Integer> peg5 = PegFactory.getInstance().getPeg(5);
 
 	public IntegerCoderTest() {
 	}
@@ -98,4 +107,90 @@ public class IntegerCoderTest {
 		return presenze;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Test(expected=NullPointerException.class)
+	public void testEvaluatePattern_NullPattern() {
+		Peg<Integer>[] guess =  (Peg<Integer>[]) new Peg<?>[3]; 
+		IntegerCoder.evaluatePattern(null, guess);
+		fail("A null pattern should generate a NullPointerException");
+	}
+	@SuppressWarnings("unchecked")
+	@Test(expected=NullPointerException.class)
+	public void testEvaluatePattern_NullGuess() {
+		Peg<Integer>[] secretPattern =  (Peg<Integer>[]) new Peg<?>[4]; 
+		IntegerCoder.evaluatePattern(secretPattern, null);
+		fail("A null guess should generate a NullPointerException");
+	}
+	@SuppressWarnings("unchecked")
+	@Test(expected=IllegalArgumentException.class)
+	public void testEvaluatePattern_DifferentLength() {
+		Peg<Integer>[] secretPattern =  (Peg<Integer>[]) new Peg<?>[4]; 
+		Peg<Integer>[] guess =  (Peg<Integer>[]) new Peg<?>[3]; 
+		IntegerCoder.evaluatePattern(secretPattern, guess);
+		fail("Different sizes should generate an IllegalArgumentException");
+	}
+	
+	@Test
+	public void testEvaluatePattern() {
+		int lc = 4;
+		
+		// [ 1, 2, 3, 4]
+		@SuppressWarnings("unchecked")
+		Peg<Integer>[] secretPattern =  (Peg<Integer>[]) new Peg<?>[lc]; 
+		secretPattern[0] = peg1; secretPattern[1] = peg2; secretPattern[2] = peg3; secretPattern[3] = peg4; 
+
+		@SuppressWarnings("unchecked")
+		Peg<Integer>[] guess =  (Peg<Integer>[]) new Peg<?>[lc]; 
+
+		// [1, 2, 3, 4] VS [0, 2, 3, 4] => [ E, B, B, B ]
+		guess[0] = peg0; guess[1] = peg2; guess[2] = peg3; guess[3] = peg4; 
+		ResultMarker[] result = IntegerCoder.evaluatePattern(secretPattern, guess);
+		checkThisIsARealResultArray(result, secretPattern.length);
+
+ 		ResultMarker[] expected = {ResultMarker.EMPTY, ResultMarker.BLACK, ResultMarker.BLACK, ResultMarker.BLACK };
+		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
+		
+		// [1, 2, 3, 4] VS [0, 2, 0, 0] => [ E, B, E, E ]
+		guess[0] = peg0; guess[1] = peg2; guess[2] = peg0; guess[3] = peg0; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+ 		expected[0] = ResultMarker.EMPTY; expected[1] = ResultMarker.BLACK; expected[2] = ResultMarker.EMPTY; expected[3] = ResultMarker.EMPTY ;
+		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
+
+		// [1, 2, 3, 4] VS [5, 5, 5, 5] => [ E, E, E, E ]
+		guess[0] = peg5; guess[1] = peg5; guess[2] = peg5; guess[3] = peg5; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+ 		expected[0] = ResultMarker.EMPTY; expected[1] = ResultMarker.EMPTY; expected[2] = ResultMarker.EMPTY; expected[3] = ResultMarker.EMPTY ;
+		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
+
+		// [1, 2, 3, 4] VS [3, 3, 3, 3] => [ E, E, B, E ]
+		guess[0] = peg3; guess[1] = peg3; guess[2] = peg3; guess[3] = peg3; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+ 		expected[0] = ResultMarker.EMPTY; expected[1] = ResultMarker.EMPTY; expected[2] = ResultMarker.BLACK; expected[3] = ResultMarker.EMPTY ;
+		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
+
+		// [1, 2, 3, 4] VS [3, 3, 4, 4] => [ W, E, E, W ]
+//		guess[0] = peg3; guess[1] = peg3; guess[2] = peg4; guess[3] = peg4; 
+//		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+// 		expected[0] = ResultMarker.WHITE; expected[1] = ResultMarker.EMPTY; expected[2] = ResultMarker.EMPTY; expected[3] = ResultMarker.WHITE ;
+//		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
+
+		// [1, 2, 3, 4] VS [0, 3, 3, 4] => [ E, E, B, B ]
+		// [1, 2, 3, 4] VS [0, 3, 3, 2] => [ E, E, B, W ]
+	
+	}
+
+	/**
+	 * Checks the passed ResultMarker array is a real array with real ResultMarkers in all positions
+	 * @param result
+	 */
+	private void checkThisIsARealResultArray(ResultMarker[] result, int lc) {
+		assertNotNull("Should return a real result, not null.", result);
+		assertEquals("Pattern lenght should be of the right length.", lc, result.length);
+		for (ResultMarker marker : result) {
+			assertNotNull("Marker in the result should not be null.", marker);
+			assertTrue("Result should be one of the right values: black, white or empty", 
+					marker == ResultMarker.BLACK || marker == ResultMarker.EMPTY || marker == ResultMarker.WHITE);
+		}
+	}
+	
 }

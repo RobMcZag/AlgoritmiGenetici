@@ -1,5 +1,7 @@
 package com.rzagni.mastermind;
 
+import java.util.Arrays;
+
 public class IntegerCoder {
 
 	protected static final int MIN_CODE_LENGTH = 1;
@@ -46,6 +48,43 @@ public class IntegerCoder {
 			pattern[i] = PegFactory.getInstance().getPeg(color); 
 		}
 		return pattern;
+	}
+
+	/**
+	 * Evaluates the guess in respect to the pattern.
+	 * Gives a BLACK ResultMarker for every Peg of the right color in the right position,
+	 * and a WHITE peg for every Peg of the right color in the wrong position,
+	 * Pattern and guess should be the same length, as well as the Result.
+	 * @param pattern the pattern to be compared with the guess
+	 * @param guess the guess to be compared with the pattern 
+	 * @return the result of the evaluation
+	 */
+	public static ResultMarker[] evaluatePattern(
+			Peg<Integer>[] pattern, Peg<Integer>[] guess) {
+		
+		if(pattern == null || guess == null) {
+			throw new NullPointerException("Arguments pattern and guess can not be null.");
+		}
+		if(pattern.length != guess.length) {
+			throw new IllegalArgumentException("Argument have different length. They should be the same length.");
+		}
+		ResultMarker[] result = new ResultMarker[pattern.length];
+		
+		for (int i = 0; i < guess.length; i++) {
+			if (guess[i] == pattern[i]) {
+				result[i] = ResultMarker.BLACK;
+				continue;
+			}
+			for (int j = 0; j < pattern.length; j++) {
+				if (guess[i] == pattern[j]) {
+					result[i] = ResultMarker.WHITE;
+					break;
+				}
+			}
+			result[i] = ResultMarker.EMPTY;
+		}
+		// XXX should shuffle the array ?	java.util.Collections.shuffle(Arrays.asList(result));
+		return result;
 	}
 
 }
