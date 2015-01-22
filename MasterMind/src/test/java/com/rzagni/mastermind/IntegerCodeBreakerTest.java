@@ -63,10 +63,12 @@ public class IntegerCodeBreakerTest {
 	
 	@Test
 	public void testGetNextGuess() {
-		Peg<Integer>[] guess = codeBreaker.getCurrentGuess();
+		codeBreaker.getCurrentGuess();
 		Peg<Integer>[] nextGuess = codeBreaker.getNextGuess(result);
 		checkThisIsARealPegArray(nextGuess);
 	}
-	// TODO should we remember and return guesses and results to every guess?
+	// TODO should we remember results to every guess?
+	// For random guesses we do not need it. For consistent guessing we need it.
+	
 	
 }
