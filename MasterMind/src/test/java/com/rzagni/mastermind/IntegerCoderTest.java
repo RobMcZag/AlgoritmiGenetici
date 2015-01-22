@@ -130,20 +130,19 @@ public class IntegerCoderTest {
 		fail("Different sizes should generate an IllegalArgumentException");
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testEvaluatePattern() {
 		int lc = 4;
 		
 		// [ 1, 2, 3, 4]
-		@SuppressWarnings("unchecked")
 		Peg<Integer>[] secretPattern =  (Peg<Integer>[]) new Peg<?>[lc]; 
 		secretPattern[0] = peg1; secretPattern[1] = peg2; secretPattern[2] = peg3; secretPattern[3] = peg4; 
 
-		@SuppressWarnings("unchecked")
 		Peg<Integer>[] guess =  (Peg<Integer>[]) new Peg<?>[lc]; 
 
 		// [1, 2, 3, 4] VS [0, 2, 3, 4] => [ E, B, B, B ]
-		guess[0] = peg0; guess[1] = peg2; guess[2] = peg3; guess[3] = peg4; 
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg0, peg2, peg3, peg4}; 
 		ResultMarker[] result = IntegerCoder.evaluatePattern(secretPattern, guess);
 		checkThisIsARealResultArray(result, secretPattern.length);
 
@@ -151,25 +150,25 @@ public class IntegerCoderTest {
 		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
 		
 		// [1, 2, 3, 4] VS [0, 2, 0, 0] => [ E, B, E, E ]
-		guess[0] = peg0; guess[1] = peg2; guess[2] = peg0; guess[3] = peg0; 
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg0, peg2, peg0, peg0}; 
 		result = IntegerCoder.evaluatePattern(secretPattern, guess);
  		expected[0] = ResultMarker.EMPTY; expected[1] = ResultMarker.BLACK; expected[2] = ResultMarker.EMPTY; expected[3] = ResultMarker.EMPTY ;
 		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
 
 		// [1, 2, 3, 4] VS [5, 5, 5, 5] => [ E, E, E, E ]
-		guess[0] = peg5; guess[1] = peg5; guess[2] = peg5; guess[3] = peg5; 
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg5, peg5, peg5, peg5}; 
 		result = IntegerCoder.evaluatePattern(secretPattern, guess);
  		expected[0] = ResultMarker.EMPTY; expected[1] = ResultMarker.EMPTY; expected[2] = ResultMarker.EMPTY; expected[3] = ResultMarker.EMPTY ;
 		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
 
 		// [1, 2, 3, 4] VS [3, 3, 3, 3] => [ E, E, B, E ]
-		guess[0] = peg3; guess[1] = peg3; guess[2] = peg3; guess[3] = peg3; 
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg3, peg3, peg3, peg3}; 
 		result = IntegerCoder.evaluatePattern(secretPattern, guess);
  		expected[0] = ResultMarker.EMPTY; expected[1] = ResultMarker.EMPTY; expected[2] = ResultMarker.BLACK; expected[3] = ResultMarker.EMPTY ;
 		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));
 
 		// [1, 2, 3, 4] VS [3, 3, 4, 4] => [ W, E, E, W ]
-//		guess[0] = peg3; guess[1] = peg3; guess[2] = peg4; guess[3] = peg4; 
+//		guess =  (Peg<Integer>[]) new Peg<?>[] {peg3, peg3, peg4, peg4}; 
 //		result = IntegerCoder.evaluatePattern(secretPattern, guess);
 // 		expected[0] = ResultMarker.WHITE; expected[1] = ResultMarker.EMPTY; expected[2] = ResultMarker.EMPTY; expected[3] = ResultMarker.WHITE ;
 //		assertTrue("The result should be correct.", Arrays.deepEquals(result, expected));

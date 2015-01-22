@@ -1,6 +1,5 @@
 package com.rzagni.mastermind;
 
-import java.util.Arrays;
 
 public class IntegerCoder {
 
