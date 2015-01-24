@@ -6,8 +6,7 @@ import java.util.List;
 public class IntegerCodeBreaker extends IntegerCoder implements CodeBreaker<Integer>{
 	
 	private Peg<Integer>[] currentGuess;
-	private final List<Peg<Integer>[]> guesses = new ArrayList<Peg<Integer>[]>();;
-//	private List<ResultMarker[]> results;
+	private final List<Peg<Integer>[]> guesses = new ArrayList<Peg<Integer>[]>();
 			
 	/**
 	 * Creates a CodeBreaker to play with codes of the required length and number of colors.
@@ -22,7 +21,7 @@ public class IntegerCodeBreaker extends IntegerCoder implements CodeBreaker<Inte
 	 * Generates and stores the next pattern for this codeBreaker.
 	 * @param result 
 	 */
-	private Peg<Integer>[] generateNextGuess(ResultMarker[] result) {
+	protected Peg<Integer>[] generateNextGuess(ResultMarker[] result) {
 		Peg<Integer>[] guess = generateRandomPattern();
 		this.guesses.add(guess);
 		return guess;
