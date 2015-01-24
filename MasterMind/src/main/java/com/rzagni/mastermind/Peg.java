@@ -41,5 +41,9 @@ public class Peg<COLOR> {
 		return this.color.hashCode();
 	}
 	
+	@Override
+	public String toString() {
+		return this.color.toString();
+	}
 	
 }
