@@ -75,6 +75,7 @@ public class PegTest {
 		assertNotEquals("Two peg with different color should have different hashmap.", p1.hashCode(), p2.hashCode());
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testDifferentTypeOfPegsCanNotMix() {
 		// assertTrue(p1 != pEMPTY); /* COMPILER ENFORCE THIS */
@@ -87,7 +88,6 @@ public class PegTest {
 		assertTrue(px != py);
 		assertNotEquals("Pegs of different Type should be different", px, py);
 	}
-	// TODO should check two different kind of pegs are not equal / mixable
 	
 	@Test
 	public void testStringPegCreation() {
