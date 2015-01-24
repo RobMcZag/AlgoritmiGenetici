@@ -49,7 +49,7 @@ public class IntegerCoderTest {
 	public void testIntegerCoderCreation() {
 		int lc = 4;
 		int nc = 6;
-		IntegerCoder coder = new IntegerCoder(lc, nc);
+		Coder coder = new IntegerCoder(lc, nc);
 		assertNotNull("Should be able to create a new Code Maker", coder);
 		assertEquals("Code lenght should be the one passed", lc, coder.getCodeLength() );
 		assertEquals("Number of colors should be the one passed", nc, coder.getNumberOfColors() );
@@ -96,7 +96,7 @@ public class IntegerCoderTest {
 	 */
 	private int[][] measurePatternGeneration(int lc, int nc, int iterations) {
 		int[][] presenze = new int[lc][nc];
-		IntegerCoder coder = new IntegerCoder(lc, nc);
+		Coder coder = new IntegerCoder(lc, nc);
 		for (int i = 0; i < iterations; i++) {
 			Peg<Integer>[] pattern = coder.generateRandomPattern();
 			for (int p = 0; p < pattern.length; p++) {

@@ -1,9 +1,8 @@
 package com.rzagni.mastermind;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class IntegerCoder {
+public class IntegerCoder implements Coder<Integer> {
 
 	protected static final int MIN_CODE_LENGTH = 1;
 	protected static final int MIN_NUM_COLORS = 2;
@@ -28,18 +27,26 @@ public class IntegerCoder {
 		this.numberOfColors = numberOfColors;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rzagni.mastermind.Coder#getCodeLength()
+	 */
+	@Override
 	public int getCodeLength() {
 		return this.codeLength;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rzagni.mastermind.Coder#getNumberOfColors()
+	 */
+	@Override
 	public int getNumberOfColors() {
 		return this.numberOfColors;
 	}
 
-	/**
-	 * Generates a random pattern of the current length and using Pegs of the allowed colors.
-	 * @return an array with the generated Pegs;
+	/* (non-Javadoc)
+	 * @see com.rzagni.mastermind.Coder#generateRandomPattern()
 	 */
+	@Override
 	public Peg<Integer>[] generateRandomPattern() {
 		@SuppressWarnings("unchecked")
 		Peg<Integer>[] pattern = (Peg<Integer>[]) new Peg<?>[this.codeLength];
