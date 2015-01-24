@@ -16,24 +16,16 @@ public class IntegerCodeBreaker extends IntegerCoder implements CodeBreaker<Inte
 	 */
 	public IntegerCodeBreaker(int codeLength, int numberOfColors) {
 		super(codeLength, numberOfColors);
-		generateNextGuess();
 	}
 
 	/**
 	 * Generates and stores the next pattern for this codeBreaker.
+	 * @param result 
 	 */
-	private Peg<Integer>[] generateNextGuess() {
-		this.currentGuess = generateRandomPattern();
-		this.guesses.add(currentGuess);
-		return this.currentGuess;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.rzagni.mastermind.CodeBreaker#getCurrentGuess()
-	 */
-	@Override
-	public Peg<Integer>[] getCurrentGuess() {
-		return this.currentGuess;
+	private Peg<Integer>[] generateNextGuess(ResultMarker[] result) {
+		Peg<Integer>[] guess = generateRandomPattern();
+		this.guesses.add(guess);
+		return guess;
 	}
 
 	/* (non-Javadoc)
@@ -44,6 +36,14 @@ public class IntegerCodeBreaker extends IntegerCoder implements CodeBreaker<Inte
 		return this.guesses.size();
 	}
 
+	/**
+	 * Returns the list of guesses returned until now.
+	 * @return the list of guesses returned until now.
+	 */
+	protected List<Peg<Integer>[]> getGuesses() {
+		return this.guesses;
+	}
+
 	/* (non-Javadoc)
 	 * @see com.rzagni.mastermind.CodeBreaker#getNextGuess(com.rzagni.mastermind.ResultMarker[])
 	 */
@@ -52,7 +52,8 @@ public class IntegerCodeBreaker extends IntegerCoder implements CodeBreaker<Inte
 		if (result == null) {
 			throw new IllegalArgumentException("The result can not be null.");
 		}
-		return generateNextGuess();
+		this.currentGuess = generateNextGuess(result);
+		return this.currentGuess;
 	}
 
 }

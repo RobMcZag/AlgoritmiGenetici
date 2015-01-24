@@ -28,11 +28,11 @@ public class IntegerCodeBreakerTest {
 		assertEquals("Number of colors should be the one passed.", numberOfColors, codeBreaker.getNumberOfColors() );
 	}
 
-	@Test
-	public void testGetCurrentGuess() {
-		Peg<Integer>[] guess = codeBreaker.getCurrentGuess();
-		checkThisIsARealPegArray(guess);
-	}
+//	@Test
+//	public void testGetCurrentGuess() {
+//		Peg<Integer>[] guess = codeBreaker.getCurrentGuess();
+//		checkThisIsARealPegArray(guess);
+//	}
 	/**
 	 * Checks the passed peg array is a real array with real pegs in all positions
 	 * @param guess
@@ -48,11 +48,11 @@ public class IntegerCodeBreakerTest {
 	
 	@Test
 	public void testGetGuessCount() {
+		assertEquals("Should return the count of the current guess.", 0, codeBreaker.getGuessCount());
+		codeBreaker.getNextGuess(result);
 		assertEquals("Should return the count of the current guess.", 1, codeBreaker.getGuessCount());
 		codeBreaker.getNextGuess(result);
 		assertEquals("Should return the count of the current guess.", 2, codeBreaker.getGuessCount());
-		codeBreaker.getNextGuess(result);
-		assertEquals("Should return the count of the current guess.", 3, codeBreaker.getGuessCount());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -63,7 +63,6 @@ public class IntegerCodeBreakerTest {
 	
 	@Test
 	public void testGetNextGuess() {
-		codeBreaker.getCurrentGuess();
 		Peg<Integer>[] nextGuess = codeBreaker.getNextGuess(result);
 		checkThisIsARealPegArray(nextGuess);
 	}
