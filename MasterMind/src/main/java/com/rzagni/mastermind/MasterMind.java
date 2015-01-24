@@ -7,8 +7,8 @@ public class MasterMind {
 	public static void main(String[] args) {
 		int codeLength = 4;
 		int numberOfColors = 6;
-		IntegerCodeMaker cm = new IntegerCodeMaker( codeLength, numberOfColors);
-		IntegerCodeBreaker cb = new IntegerCodeBreaker(codeLength, numberOfColors);
+		CodeMaker<Integer> cm = new IntegerCodeMaker( codeLength, numberOfColors);
+		CodeBreaker<Integer> cb = new IntegerCodeBreaker(codeLength, numberOfColors);
 		
 		int[] res = new int[ResultMarker.values().length];
 		ResultMarker[] result = new ResultMarker[codeLength];
