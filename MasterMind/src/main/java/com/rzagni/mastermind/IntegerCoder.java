@@ -78,12 +78,13 @@ public class IntegerCoder {
 				result[i] = ResultMarker.EMPTY;
 			}
 		}
-		for (int i = 0; i < guess.length; i++) {
-			for (int j = 0; j < pattern.length; j++) {
-				if (guess[i] == pattern[j]) {
-					if (result[j] == ResultMarker.EMPTY) {
-					result[j] = ResultMarker.WHITE;
-					break;
+		for (int g = 0; g < guess.length; g++) {
+			if (result[g] != ResultMarker.BLACK) {
+				for (int p = 0; p < pattern.length; p++) {
+					if ( 	result[p] == ResultMarker.EMPTY
+						&& 	guess[g] == pattern[p] ) {
+						result[p] = ResultMarker.WHITE;
+						break;
 					}
 				}
 			}

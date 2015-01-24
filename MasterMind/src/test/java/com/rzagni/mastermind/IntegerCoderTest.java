@@ -131,24 +131,13 @@ public class IntegerCoderTest {
 	}
 	
 	private boolean checkResult(ResultMarker[] result, int blacks, int whites, int empties) {
-		int b=0, w=0, e=0;
-		for (ResultMarker resultMarker : result) {
-			switch (resultMarker) {
-			case EMPTY:
-				e++;
-				break;
-			case WHITE:
-				w++;
-				break;
-			case BLACK:
-				b++;
-				break;
-			default:
-				break;
-			}
-		}
-		return ( b == blacks && w == whites && e == empties);
+		int[] count = ResultMarker.countResultMarkers(result);
+		return (   count[ResultMarker.BLACK.ordinal()] == blacks 
+				&& count[ResultMarker.WHITE.ordinal()] == whites 
+				&& count[ResultMarker.EMPTY.ordinal()] == empties);
 	}
+
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testEvaluatePattern() {
@@ -202,6 +191,10 @@ public class IntegerCoderTest {
 		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 2, 0, 2) );
 
 		// [1, 2, 3, 4] VS [0, 3, 3, 2] => [ E, E, B, W ]
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg0, peg3, peg3, peg2}; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+		checkThisIsARealResultArray(result, secretPattern.length);
+		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 1, 1, 2) );
 
 		// [ 1, 2, 2, 4]
 		secretPattern =  (Peg<Integer>[]) new Peg<?>[] {peg1, peg2, peg2, peg4}; 
@@ -224,6 +217,33 @@ public class IntegerCoderTest {
 		checkThisIsARealResultArray(result, secretPattern.length);
 		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 4, 0, 0) );
 
+		// [1, 2, 2, 4] VS [2, 2, 2, 2] => [ E, B, B, E ]
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg2, peg2, peg2, peg2}; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+		checkThisIsARealResultArray(result, secretPattern.length);
+		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 2, 0, 2) );
+
+		// [1, 2, 2, 4] VS [5, 5, 5, 5] => [ E, E, E, E ]
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg5, peg5, peg5, peg5}; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+		checkThisIsARealResultArray(result, secretPattern.length);
+		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 0, 0, 4) );
+
+		// [ 3, 3, 0, 3]
+		secretPattern =  (Peg<Integer>[]) new Peg<?>[] {peg3, peg3, peg0, peg3}; 
+
+		// [ 3, 3, 0, 3] VS [2, 2, 3, 3] => [ E, E, W, B ]
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg2, peg2, peg3, peg3}; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+		checkThisIsARealResultArray(result, secretPattern.length);
+		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 1, 1, 2) );
+
+		// [ 3, 3, 0, 3] VS [3, 2, 3, 2] => [ B, E, W, E ]
+		guess =  (Peg<Integer>[]) new Peg<?>[] {peg3, peg2, peg3, peg2}; 
+		result = IntegerCoder.evaluatePattern(secretPattern, guess);
+		checkThisIsARealResultArray(result, secretPattern.length);
+		assertTrue("The result should be correct. Result is:" + Arrays.toString(result), checkResult(result, 1, 1, 2) );
+		
 	}
 
 	/**
