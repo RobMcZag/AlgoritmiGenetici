@@ -1,7 +1,7 @@
 package com.rzagni.mastermind;
 
 
-public class IntegerCodeMaker extends IntegerCoder {
+public class IntegerCodeMaker extends IntegerCoder implements CodeMaker<Integer> {
 	
 	private final Peg<Integer>[] secretPattern;
 
@@ -21,15 +21,10 @@ public class IntegerCodeMaker extends IntegerCoder {
 		return this.secretPattern;
 	}
 
-	/**
-	 * Evaluates the guess in respect to the secret pattern.
-	 * Gives a BLACK ResultMarker for every Peg of the right color in the right position,
-	 * and a WHITE peg for every Peg of the right color in the wrong position,
-	 * Pattern and guess should be the same length, as well as the Result.
-	 * @param pattern the pattern to be compared with the guess
-	 * @param guess the guess to be compared with the pattern 
-	 * @return the result of the evaluation
+	/* (non-Javadoc)
+	 * @see com.rzagni.mastermind.CodeMaker#evaluateGuess(com.rzagni.mastermind.Peg)
 	 */
+	@Override
 	public ResultMarker[] evaluateGuess(Peg<Integer>[] guess) {
 		return evaluatePattern(this.secretPattern, guess);
 	}

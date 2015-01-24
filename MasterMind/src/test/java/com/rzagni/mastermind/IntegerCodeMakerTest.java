@@ -14,7 +14,7 @@ public class IntegerCodeMakerTest {
 	public void testIntegerCodeMakerCreation() {
 		int lc = 4;
 		int nc = 6;
-		IntegerCoder codeMaker = new IntegerCodeMaker(lc, nc);
+		Coder codeMaker = new IntegerCodeMaker(lc, nc);
 		assertNotNull("Should be able to create a new Code Maker", codeMaker);
 		assertEquals("Code lenght should be the one passed", lc, codeMaker.getCodeLength() );
 		assertEquals("Number of colors should be the one passed", nc, codeMaker.getNumberOfColors() );
