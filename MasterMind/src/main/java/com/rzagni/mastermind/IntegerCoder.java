@@ -1,5 +1,7 @@
 package com.rzagni.mastermind;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class IntegerCoder {
 
@@ -72,17 +74,21 @@ public class IntegerCoder {
 		for (int i = 0; i < guess.length; i++) {
 			if (guess[i] == pattern[i]) {
 				result[i] = ResultMarker.BLACK;
-				continue;
+			} else {
+				result[i] = ResultMarker.EMPTY;
 			}
+		}
+		for (int i = 0; i < guess.length; i++) {
 			for (int j = 0; j < pattern.length; j++) {
 				if (guess[i] == pattern[j]) {
-					result[i] = ResultMarker.WHITE;
+					if (result[j] == ResultMarker.EMPTY) {
+					result[j] = ResultMarker.WHITE;
 					break;
+					}
 				}
 			}
-			result[i] = ResultMarker.EMPTY;
 		}
-		// XXX should shuffle the array ?	java.util.Collections.shuffle(Arrays.asList(result));
+		java.util.Collections.shuffle(Arrays.asList(result));
 		return result;
 	}
 
