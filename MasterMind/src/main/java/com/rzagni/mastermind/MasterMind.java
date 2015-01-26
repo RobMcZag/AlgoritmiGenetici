@@ -1,10 +1,12 @@
 package com.rzagni.mastermind;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class MasterMind {
 
 	public static void main(String[] args) {
+		Date start = new Date();
 		int codeLength = 4;
 		int numberOfColors = 6;
 		CodeMaker<Integer> cm = new IntegerCodeMaker( codeLength, numberOfColors);
@@ -21,7 +23,7 @@ public class MasterMind {
 			res = ResultMarker.countResultMarkers(result);
 			logInfo(guess, result, ++guessCounter);
 		}
-		System.out.println("\nSoluzione trovata in " + guessCounter + " tentativi");
+		System.out.println("\nSoluzione trovata in " + guessCounter + " tentativi ["+ (new Date().getTime() - start.getTime()) +" ms]");
 		System.out.println(Arrays.toString(((IntegerCodeMaker) cm).getSecretCode()));
 	}
 
