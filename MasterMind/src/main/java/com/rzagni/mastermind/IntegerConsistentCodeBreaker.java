@@ -6,15 +6,17 @@ import java.util.List;
 
 public class IntegerConsistentCodeBreaker extends IntegerCodeBreaker {
 
-	private List<int[]> results = new ArrayList<int[]>();;
+	private List<int[]> results = new ArrayList<int[]>();
 	
 	public IntegerConsistentCodeBreaker(int codeLength, int numberOfColors) {
 		super(codeLength, numberOfColors);
 	}
 
 	/**
-	 * Generates and stores the next pattern for this codeBreaker.
-	 * @param result 
+	 * Generates and stores the next guess for this codeBreaker.
+	 * This CodeBreaker generates only guesses that are consistent with the previous guesses and their results.
+	 * @param result the result obtained from the previous guess played from this CodeBreaker.
+	 * @return the new guess to play, as an array of Pegs.
 	 */
 	@Override
 	protected Peg<Integer>[] generateNextGuess(ResultMarker[] result) {
@@ -30,8 +32,7 @@ public class IntegerConsistentCodeBreaker extends IntegerCodeBreaker {
 				Peg<Integer>[] pastGuess = getGuesses().get(g);
 				ResultMarker[] tempResult = evaluatePattern(pastGuess, guess);
 				int[] tempResCount = ResultMarker.countResultMarkers(tempResult);
-				int[] pastResCount = results.get(g);
-				if (! Arrays.equals(pastResCount, tempResCount)) {
+				if (! Arrays.equals(results.get(g), tempResCount)) {
 					guessIsConsistent = false;
 				}
 			}
