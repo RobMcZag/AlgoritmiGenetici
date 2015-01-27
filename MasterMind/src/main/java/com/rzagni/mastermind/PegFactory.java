@@ -3,8 +3,6 @@ package com.rzagni.mastermind;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.swing.internal.plaf.synth.resources.synth;
-
 /**
  * A factory objects to build pegs of a certain type.
  * @author Roberto
