@@ -4,6 +4,7 @@
 *.jar
 *.war
 *.ear
+!gradle-wrapper.jar
 
 # Eclipse
 .settings
@@ -20,3 +21,14 @@ build/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /bin/
+
+# Mac OS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IntelliJ Idea IDE excludes
+.idea
+
+# Dependency list from "gradle dependencies" command
+dependencies.txt
